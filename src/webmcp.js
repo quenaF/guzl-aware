@@ -13,10 +13,11 @@ function assertBooking(bookingId) {
 }
 
 function emit(name, detail) {
+  if (typeof window === 'undefined' || typeof window.dispatchEvent !== 'function') return;
   window.dispatchEvent(new CustomEvent('guzl:tool', { detail: { name, ...detail } }));
 }
 
-function detectSupportBoundary(text = '') {
+export function detectSupportBoundary(text = '') {
   const normalized = text.toLowerCase();
   const patterns = [
     'not comfortable', 'uncomfortable', 'unsafe', 'not safe', 'scared', 'afraid',
@@ -26,13 +27,8 @@ function detectSupportBoundary(text = '') {
   return patterns.some((pattern) => normalized.includes(pattern));
 }
 
-export async function registerGuzlTools() {
-  if (!document.modelContext?.registerTool) {
-    emit('webmcp_unavailable', { summary: 'WebMCP is not available in this browser.' });
-    return { available: false };
-  }
-
-  const tools = [
+export function createGuzlTools() {
+  return [
     {
       name: 'get_experience_context',
       title: 'Get experience context',
@@ -180,7 +176,15 @@ export async function registerGuzlTools() {
       },
     },
   ];
+}
 
+export async function registerGuzlTools() {
+  if (!document.modelContext?.registerTool) {
+    emit('webmcp_unavailable', { summary: 'WebMCP is not available in this browser.' });
+    return { available: false };
+  }
+
+  const tools = createGuzlTools();
   await Promise.all(tools.map((tool) => document.modelContext.registerTool(tool)));
   emit('webmcp_ready', { summary: `${tools.length} WebMCP tools registered.` });
   return { available: true, count: tools.length };
