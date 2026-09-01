@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useMemo, useState } from 'react';
 import { booking, experienceContract, initialActivity } from './state.js';
 import { registerGuzlTools } from './webmcp.js';
@@ -59,7 +61,7 @@ export default function App() {
           <div className="eyebrow">WEBMCP × EXPERIENCE INTELLIGENCE</div>
           <h1>Capability is not the same as meaning.</h1>
           <p className="hero-copy">
-            guzl-aware is a reference demo for websites that expose not only what an agent can do,
+            guzl is a reference demo for websites that expose not only what an agent can do,
             but the human context it should preserve while doing it.
           </p>
         </div>
@@ -148,7 +150,7 @@ export default function App() {
           </div>
           <div className="arrow">→</div>
           <div className="aware">
-            <span className="compare-label">guzl-aware</span>
+            <span className="compare-label">guzl</span>
             <code>context → boundary → confirmation → action</code>
             <p>Meaning survives the transaction. Sensitive context can open a separate human-support path without blocking cancellation.</p>
           </div>
@@ -167,7 +169,7 @@ export default function App() {
       </section>
 
       <footer className="shell">
-        <span>guzl-aware · WebMCP Challenge 2026</span>
+        <span>guzl · WebMCP Challenge 2026</span>
         <span>Capability contract × Experience contract</span>
       </footer>
     </main>
